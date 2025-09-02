@@ -1,0 +1,53 @@
+{
+  "builders": [{
+    "type": "amazon-ebs",
+    "profile": "test",
+    "region": "us-east-1",
+    "instance_type": "t3.micro",
+    "source_ami_filter": {
+      "filters": {
+        "name": "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*",
+        "virtualization-type": "hvm",
+        "root-device-type": "ebs"
+      },
+      "owners": ["099720109477"],
+      "most_recent": true
+    },
+    "ssh_username": "ubuntu",
+    "ami_name": "packer-ubuntu-gpu-{{timestamp}}",
+    "iam_instance_profile": "s3-access",
+    "security_group_ids": "sg-0320d54c7671577a6"
+  }],
+  "provisioners": [
+   {
+    "type": "shell",
+    "inline": [
+      "echo 'Removing command-not-found...'",
+      "set -eux",
+      "sudo DEBIAN_FRONTEND=noninteractive apt-get remove -y command-not-found || true",
+      "sudo apt-get install -y apt-transport-https ca-certificates gnupg",
+      "sudo apt-get clean",
+      "sudo apt-get update -y",
+      "echo 'Installing AWS CLIv2...'",
+      "sudo apt-get install -y unzip curl",
+      "curl \"https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip\" -o \"awscliv2.zip\"",
+      "unzip awscliv2.zip",
+      "sudo ./aws/install",
+      "aws --version",
+      "echo 'AWS CLI installed successfully!'"
+    ]
+  },
+    {
+      "type": "shell",
+      "inline": [
+        "aws s3 cp s3://packertest123/user-data.yaml /tmp/user-data.yaml",
+        "sudo cloud-init single --file /tmp/user-data.yaml --name package_update_upgrade_install --frequency always",
+        "echo 'Installing GPU drivers if NVIDIA present...'",
+        "if lspci | grep -i nvidia; then",
+        "  sudo apt-get update -y && sudo apt-get install -y nvidia-driver-525",
+        "  nvidia-smi",
+        "fi"
+      ]
+    }
+  ]
+}
