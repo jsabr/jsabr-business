@@ -1,0 +1,21 @@
+#cloud-config
+---
+autoinstall:
+  version: 1
+  identity:
+    hostname: packer-ubuntu
+    username: packer
+    password: "$6$rounds=4096$abcdefgh$abcdefghabcdefghabcdefghabcdefghabcdefghabcdefghabcdefgh"
+  ssh:
+    install-server: yes
+    allow-pw: yes
+
+packages:
+  - htop
+  - vim
+  - git
+
+runcmd:
+  - echo "Cloud-init complete"
+  - touch /home/packer/cloud-init-done
+
