@@ -1,0 +1,1 @@
+ gcloud bq load --source_format=CSV --skip_leading_rows=1 mydataset.patent_inventor_sample patent_inventor_sample.csv patend_id:STRING,inventor_sequence:INTEGER,inventor_id:STRING,disambig_inventor_name_first:STRING,disambig_inventor_name_last:STRING,gender_code:STRING,location_id:STRING

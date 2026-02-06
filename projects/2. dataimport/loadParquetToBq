@@ -1,0 +1,4 @@
+bq load --source_format=PARQUET --autodetect mydataset.tablename (path_to_parquet_file)
+
+Example:
+bq load --source_format=PARQUET --autodetect mydataset.patent_location_sample (/mnt/c/Users/etc)
