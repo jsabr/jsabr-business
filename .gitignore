@@ -1,0 +1,8 @@
+projects/1. datastaging/crime_sample.csv
+projects/1. datastaging/g_inventor_disambiguated.tsv
+projects/1. datastaging/g_location_disambiguated.tsv
+projects/1. datastaging/g_patent.tsv
+projects/1. datastaging/patent_inventor_sample.csv
+projects/1. datastaging/patent_location_sample.csv
+projects/1. datastaging/patent_location_sample.parquet
+projects/1. datastaging/patent_sample.csv
