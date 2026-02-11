@@ -1,0 +1,13 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - echo "Building commit $CODEBUILD_RESOLVED_SOURCE_VERSION"
+      - mkdir dist
+      - echo "Hello from CodePipeline" > dist/index.html
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: dist
