@@ -14,11 +14,11 @@ terraform {
 
 provider "aws" {
   region = var.aws_region
-  access_key = trimspace(file("aws_access_key.txt"))
-  secret_key = trimspace(file("aws_secret_key.txt"))
+  access_key = file("aws-creds/aws_access_key.txt")
+  secret_key = file("aws-creds/aws_secret_key.txt")
 }
 
 provider "google" {
-  project = var.gcp_project_id
-  credentials = file("my-gcp-key.json")
+  project = file("gcp-creds/gcpproject.txt")
+  credentials = file("gcp-creds/aws-gcp.json")
 }
